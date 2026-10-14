@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kids Fun Learning - ABCD & Rhymes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF6B6B;
+      --secondary: #4ECDC4;
+      --accent: #FFE66D;
+      --purple: #A06CD5;
+      --bg: #F7FFF7;
+      --card-bg: #FFFFFF;
+      --text: #2C3E50;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #FFF3B0, #CAFFBF, #9BF6FF);
+      min-height: 100vh;
+      color: var(--text);
+      padding-bottom: 80px;
+    }
+    header {
+      background: white;
+      padding: 15px 20px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+    header p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 10px 15px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+      z-index: 100;
+    }
+    .tab-btn {
+      border: none;
+      background: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: #888;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      transform: scale(1.05);
+    }
+    .section-content {
+      display: none;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .section-content.active {
+      display: block;
+    }
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .letter-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px 15px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+      border: 3px solid #f0f0f0;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .letter-card:active {
+      transform: scale(0.95);
+      border-color: var(--primary);
+    }
+    .letter-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+    .letter-emoji {
+      font-size: 2.8rem;
+      margin: 8px 0;
+    }
+    .letter-word {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .rhyme-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+    }
+    .rhyme-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .rhyme-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--purple);
+    }
+    .play-btn {
+      background: var(--secondary);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .rhyme-lyrics {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #555;
+      background: #fdfaf6;
+      padding: 12px 15px;
+      border-radius: 12px;
+      white-space: pre-line;
+    }
+    .quiz-box {
+      background: white;
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .quiz-question {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    .quiz-emoji {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .quiz-btn {
+      background: #f0f4f8;
+      border: 2px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 14px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #333;
+      cursor: pointer;
+    }
+    .quiz-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎈 Kids Learn & Fun 🎈</h1>
+    <p>ABCD, Poems & Games!</p>
+  </header>
+
+  <!-- Section 1: ABCD Flashcards -->
+  <main id="abcd-tab" class="section-content active">
+    <div class="grid-cards" id="cards-container"></div>
+  </main>
+
+  <!-- Section 2: Nursery Rhymes -->
+  <main id="rhymes-tab" class="section-content">
+    <div class="rhyme-card">
+      <div class="rhyme-header">
+        <span class="rhyme-title">⭐ Twinkle Twinkle</span>
+        <button class="play-btn" onclick="speakText('Twinkle twinkle little star, how I wonder what you are! Up above the world so high, like a diamond in the sky.')">▶</button>
+      </div>
+      <div class="rhyme-lyrics">
+Twinkle, twinkle, little star,
+How I wonder what you are!
+Up above the world so high,
+Like a diamond in the sky.
+      </div>
+    </div>
+
+    <div class="rhyme-card">
+      <div class="rhyme-header">
+        <span class="rhyme-title">🍬 Johny Johny</span>
+        <button class="play-btn" onclick="speakText('Johny Johny, Yes Papa? Eating sugar? No Papa. Telling lies? No Papa. Open your mouth, Ha Ha Ha!')">▶</button>
+      </div>
+      <div class="rhyme-lyrics">
+Johny, Johny, Yes, Papa?
+Eating sugar? No, Papa.
+Telling lies? No, Papa.
+Open your mouth, Ha! Ha! Ha!
+      </div>
+    </div>
+
+    <div class="rhyme-card">
+      <div class="rhyme-header">
+        <span class="rhyme-title">🐑 Baa Baa Black Sheep</span>
+        <button class="play-btn" onclick="speakText('Baa baa black sheep, have you any wool? Yes sir, yes sir, three bags full. One for the master, and one for the dame, and one for the little boy who lives down the lane.')">▶</button>
+      </div>
+      <div class="rhyme-lyrics">
+Baa, baa, black sheep, have you any wool?
+Yes, sir, yes, sir, three bags full.
+One for the master, and one for the dame,
+And one for the little boy who lives down the lane.
+      </div>
+    </div>
+  </main>
+
+  <!-- Section 3: Quiz Game -->
+  <main id="quiz-tab" class="section-content">
+    <div class="quiz-box">
+      <div class="quiz-question" id="quiz-question">What starts with?</div>
+      <div class="quiz-emoji" id="quiz-emoji">🍎</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div id="quiz-msg" style="margin-top: 15px; font-weight: 700; font-size: 1.1rem;"></div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('abcd')">
+      <span>🔤</span>
+      <span>ABCD</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('rhymes')">
+      <span>🎵</span>
+      <span>Rhymes</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('quiz')">
+      <span>🎮</span>
+      <span>Quiz</span>
+    </button>
+  </nav>
+
+  <script>
+    const alphabetData = [
+      { letter: 'A', word: 'Apple', emoji: '🍎' },
+      { letter: 'B', word: 'Ball', emoji: '⚽' },
+      { letter: 'C', word: 'Cat', emoji: '🐱' },
+      { letter: 'D', word: 'Dog', emoji: '🐶' },
+      { letter: 'E', word: 'Elephant', emoji: '🐘' },
+      { letter: 'F', word: 'Fish', emoji: '🐟' },
+      { letter: 'G', word: 'Grapes', emoji: '🍇' },
+      { letter: 'H', word: 'Hat', emoji: '🎩' },
+      { letter: 'I', word: 'Ice Cream', emoji: '🍦' },
+      { letter: 'J', word: 'Juice', emoji: '🧃' },
+      { letter: 'K', word: 'Kite', emoji: '🪁' },
+      { letter: 'L', word: 'Lion', emoji: '🦁' },
+      { letter: 'M', word: 'Monkey', emoji: '🐒' },
+      { letter: 'N', word: 'Nest', emoji: '🪺' },
+      { letter: 'O', word: 'Orange', emoji: '🍊' },
+      { letter: 'P', word: 'Parrot', emoji: '🦜' },
+      { letter: 'Q', word: 'Queen', emoji: '👑' },
+      { letter: 'R', word: 'Rabbit', emoji: '🐰' },
+      { letter: 'S', word: 'Sun', emoji: '☀️' },
+      { letter: 'T', word: 'Tiger', emoji: '🐯' },
+      { letter: 'U', word: 'Umbrella', emoji: '☂️' },
+      { letter: 'V', word: 'Van', emoji: '🚐' },
+      { letter: 'W', word: 'Watch', emoji: '⌚' },
+      { letter: 'X', word: 'Xylophone', emoji: '🎵' },
+      { letter: 'Y', word: 'Yak', emoji: '🐂' },
+      { letter: 'Z', word: 'Zebra', emoji: '🦓' }
+    ];
+
+    // Speech helper
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.85;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Render Cards
+    const container = document.getElementById('cards-container');
+    alphabetData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'letter-card';
+      card.innerHTML = `
+        <div class="letter-title">${item.letter}</div>
+        <div class="letter-emoji">${item.emoji}</div>
+        <div class="letter-word">${item.word}</div>
+      `;
+      card.onclick = () => speakText(`${item.letter} for ${item.word}`);
+      container.appendChild(card);
+    });
+
+    // Navigation Switcher
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+      
+      if (tab === 'abcd') {
+        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+        document.getElementById('abcd-tab').classList.add('active');
+      } else if (tab === 'rhymes') {
+        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+        document.getElementById('rhymes-tab').classList.add('active');
+      } else {
+        document.querySelector('.tab-btn:nth-child(3)').classList.add('active');
+        document.getElementById('quiz-tab').classList.add('active');
+        loadQuiz();
+      }
+    }
+
+    // Simple Quiz
+    let currentQuizItem = null;
+    function loadQuiz() {
+      const msg = document.getElementById('quiz-msg');
+      msg.textContent = '';
+      currentQuizItem = alphabetData[Math.floor(Math.random() * alphabetData.length)];
+      document.getElementById('quiz-emoji').textContent = currentQuizItem.emoji;
+      document.getElementById('quiz-question').textContent = `Which letter starts with ${currentQuizItem.word}?`;
+
+      let options = [currentQuizItem.letter];
+      while (options.length < 4) {
+        const rand = alphabetData[Math.floor(Math.random() * alphabetData.length)].letter;
+        if (!options.includes(rand)) options.push(rand);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      const optsDiv = document.getElementById('quiz-options');
+      optsDiv.innerHTML = '';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-btn';
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(chosen) {
+      const msg = document.getElementById('quiz-msg');
+      if (chosen === currentQuizItem.letter) {
+        msg.textContent = '🎉 Very Good! Correct! 🌟';
+        msg.style.color = '#2ecc71';
+        speakText('Awesome! Correct answer!');
+        setTimeout(loadQuiz, 1600);
+      } else {
+        msg.textContent = '❌ Try again!';
+        msg.style.color = '#e74c3c';
+        speakText('Oops, try again!');
+      }
+    }
+  </script>
+</body>
+</html>
