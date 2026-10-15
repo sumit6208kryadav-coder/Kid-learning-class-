@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "sumit6208kryadav-coder.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Kidlearn",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "id": "Kid-learning-app",
+  "description": "Fun ABCD flashcards, nursery rhymes and quiz game for kids."
+}
